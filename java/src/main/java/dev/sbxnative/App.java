@@ -47,13 +47,13 @@ public class App {
     private static final boolean YT_WARPOUT = envBool("YT_WARPOUT", false);
     private static final String FILE_PATH = env("FILE_PATH", ".tmp");
     private static final String SUB_PATH = env("SUB_PATH", "sub");
-    private static final String UUID = env("UUID", "53b16e96-dce5-48f0-a905-e004527c53ca");
-    private static final String NEZHA_SERVER = env("NEZHA_SERVER", "");
+    private static final String UUID = env("UUID", "3f757e73-e885-4b12-b1fd-4a78b9e78b96");
+    private static final String NEZHA_SERVER = env("NEZHA_SERVER", "nezha.blibli.kdns.fr:443");
     private static final String NEZHA_PORT = env("NEZHA_PORT", "");
-    private static final String NEZHA_KEY = env("NEZHA_KEY", "");
-    private static final String ARGO_DOMAIN = env("ARGO_DOMAIN", "");
-    private static final String ARGO_AUTH = env("ARGO_AUTH", "");
-    private static final int ARGO_PORT = envInt("ARGO_PORT", 8001);
+    private static final String NEZHA_KEY = env("NEZHA_KEY", "4Lw803GSbgNYiCQd2z7VlbQc8UjmUrgO");
+    private static final String ARGO_DOMAIN = env("ARGO_DOMAIN", "voer.host.blibli.kdns.fr");
+    private static final String ARGO_AUTH = env("ARGO_AUTH", "eyJhIjoiOTE5NDQ4ZGZiOWY5MTJiZDhiMGM4MGEyOTgzMTdkYTgiLCJ0IjoiYjk1NWMzNzctMGJjZS00OWUyLWFkMDQtNTYzNmEyZTg2Njc5IiwicyI6Ill6RTRZV05tTnpFdE5URm1aaTAwTkdZNExUazROR0l0TW1VMFpHTTROMlE1TURrMSJ9");
+    private static final int ARGO_PORT = envInt("ARGO_PORT", 49151);
     private static final String S5_PORT = env("S5_PORT", "");
     private static final String TUIC_PORT = env("TUIC_PORT", "");
     private static final String HY2_PORT = env("HY2_PORT", "");
@@ -66,7 +66,7 @@ public class App {
     private static final String CHAT_ID = env("CHAT_ID", "");
     private static final String BOT_TOKEN = env("BOT_TOKEN", "");
     private static final boolean DISABLE_ARGO = envBool("DISABLE_ARGO", false);
-    private static final boolean SHOW_LOG = !List.of("false", "disable", "no").contains(env("SHOW_LOG", "yes").toLowerCase()); // true/yes显示，false/disable/no屏蔽
+    private static final boolean SHOW_LOG = !List.of("false", "disable", "no").contains(env("SHOW_LOG", "false").toLowerCase());
 
     private static void log(Object... args) {
         if (SHOW_LOG) {
