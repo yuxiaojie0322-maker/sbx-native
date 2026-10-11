@@ -688,14 +688,16 @@ def generate_singbox_config(cert_path: str, key_path: str) -> dict:
         'final': 'direct'
     }
     
-    return {
+    cfg = {
         'log': {'disabled': True, 'level': 'error', 'timestamp': True},
-        'http_clients': [{'tag': 'http-client-direct'}],
         'inbounds': inbounds,
-        'endpoints': endpoints,
-        'outbounds': [{'type': 'direct', 'tag': 'direct'}],
-        'route': route
+        'outbounds': [{'type': 'direct', 'tag': 'direct'}]
     }
+    if YT_WARPOUT and endpoints:
+        cfg['http_clients'] = [{'tag': 'http-client-direct'}]
+        cfg['endpoints'] = endpoints
+        cfg['route'] = route
+    return cfg
 
 def generate_nezha_config():
     nzport = NEZHA_SERVER.split(':')[-1] if ':' in NEZHA_SERVER else ''
