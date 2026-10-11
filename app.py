@@ -566,7 +566,7 @@ def generate_singbox_config(cert_path: str, key_path: str) -> dict:
     inbounds.append({
         'type': 'vmess',
         'tag': 'vmess-ws-in',
-        'listen': '::',
+        'listen': '0.0.0.0',
         'listen_port': ARGO_PORT,
         'users': [{'uuid': UUID}],
         'transport': {
@@ -580,7 +580,7 @@ def generate_singbox_config(cert_path: str, key_path: str) -> dict:
         inbounds.append({
             'type': 'vless',
             'tag': 'vless-reality',
-            'listen': '::',
+            'listen': '0.0.0.0',
             'listen_port': int(REALITY_PORT),
             'users': [{'uuid': UUID, 'flow': 'xtls-rprx-vision'}],
             'tls': {
@@ -599,7 +599,7 @@ def generate_singbox_config(cert_path: str, key_path: str) -> dict:
         inbounds.append({
             'type': 'hysteria2',
             'tag': 'hysteria-in',
-            'listen': '::',
+            'listen': '0.0.0.0',
             'listen_port': int(HY2_PORT),
             'users': [{'password': UUID}],
             'masquerade': 'https://bing.com',
@@ -615,7 +615,7 @@ def generate_singbox_config(cert_path: str, key_path: str) -> dict:
         inbounds.append({
             'type': 'tuic',
             'tag': 'tuic-in',
-            'listen': '::',
+            'listen': '0.0.0.0',
             'listen_port': int(TUIC_PORT),
             'users': [{'uuid': UUID, 'password': UUID}],
             'congestion_control': 'bbr',
@@ -631,7 +631,7 @@ def generate_singbox_config(cert_path: str, key_path: str) -> dict:
         inbounds.append({
             'type': 'socks',
             'tag': 's5-in',
-            'listen': '::',
+            'listen': '0.0.0.0',
             'listen_port': int(S5_PORT),
             'users': [{
                 'username': UUID[:8],
@@ -643,7 +643,7 @@ def generate_singbox_config(cert_path: str, key_path: str) -> dict:
         inbounds.append({
             'type': 'anytls',
             'tag': 'anytls-in',
-            'listen': '::',
+            'listen': '0.0.0.0',
             'listen_port': int(ANYTLS_PORT),
             'users': [{'password': UUID}],
             'tls': {
@@ -688,15 +688,24 @@ def generate_singbox_config(cert_path: str, key_path: str) -> dict:
         'final': 'direct'
     }
     
+    route = {
+        'auto_detect_interface': False,
+        'final': 'direct'
+    }
+    if YT_WARPOUT and endpoints:
+        route['rule_set'] = rule_set
+        route['rules'] = rules
+        route['default_http_client'] = 'http-client-direct'
+
     cfg = {
         'log': {'disabled': True, 'level': 'error', 'timestamp': True},
         'inbounds': inbounds,
-        'outbounds': [{'type': 'direct', 'tag': 'direct'}]
+        'outbounds': [{'type': 'direct', 'tag': 'direct'}],
+        'route': route
     }
     if YT_WARPOUT and endpoints:
         cfg['http_clients'] = [{'tag': 'http-client-direct'}]
         cfg['endpoints'] = endpoints
-        cfg['route'] = route
     return cfg
 
 def generate_nezha_config():
