@@ -653,51 +653,38 @@ def generate_singbox_config(cert_path: str, key_path: str) -> dict:
             }
         })
     
-    endpoints = [{
-        'type': 'wireguard',
-        'tag': 'wireguard-out',
-        'mtu': 1280,
-        'address': ['172.16.0.2/32', '2606:4700:110:8dfe:d141:69bb:6b80:925/128'],
-        'private_key': 'YFYOAdbw1bKTHlNNi+aEjBM3BO7unuFC5rOkMRAz9XY=',
-        'peers': [{
-            'address': 'engage.cloudflareclient.com',
-            'port': 2408,
-            'public_key': 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=',
-            'allowed_ips': ['0.0.0.0/0', '::/0'],
-            'reserved': [78, 135, 76]
+    endpoints = []
+    rule_set = []
+    rules = []
+    
+    if YT_WARPOUT:
+        endpoints = [{
+            'type': 'wireguard',
+            'tag': 'wireguard-out',
+            'mtu': 1280,
+            'address': ['172.16.0.2/32', '2606:4700:110:8dfe:d141:69bb:6b80:925/128'],
+            'private_key': 'YFYOAdbw1bKTHlNNi+aEjBM3BO7unuFC5rOkMRAz9XY=',
+            'peers': [{
+                'address': 'engage.cloudflareclient.com',
+                'port': 2408,
+                'public_key': 'bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=',
+                'allowed_ips': ['0.0.0.0/0', '::/0'],
+                'reserved': [78, 135, 76]
+            }]
         }]
-    }]
-    
-    rule_set = [
-        {'tag': 'netflix', 'type': 'remote', 'format': 'binary',
-         'url': 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/netflix.srs'}
-    ]
-    wireguard_rule_sets = ['netflix']
-    
-    need_youtube_warp = YT_WARPOUT
-    if not need_youtube_warp:
-        try:
-            result = subprocess.run(
-                ['curl', '-o', '/dev/null', '-m', '2', '-s', '-w', '%{http_code}',
-                 'https://www.youtube.com'],
-                capture_output=True, text=True, timeout=5
-            )
-            need_youtube_warp = result.stdout.strip() != '200'
-        except:
-            need_youtube_warp = True
-    
-    if need_youtube_warp:
-        rule_set.append({
-            'tag': 'youtube', 'type': 'remote', 'format': 'binary',
-            'url': 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/youtube.srs'
-        })
-        wireguard_rule_sets.append('youtube')
-        log('Add YouTube outbound rule')
+        rule_set = [
+            {'tag': 'netflix', 'type': 'remote', 'format': 'binary',
+             'url': 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/netflix.srs'},
+            {'tag': 'youtube', 'type': 'remote', 'format': 'binary',
+             'url': 'https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/youtube.srs'}
+        ]
+        rules = [{'rule_set': ['netflix', 'youtube'], 'outbound': 'wireguard-out'}]
     
     route = {
+        'auto_detect_interface': False,
         'default_http_client': 'http-client-direct',
         'rule_set': rule_set,
-        'rules': [{'rule_set': wireguard_rule_sets, 'outbound': 'wireguard-out'}],
+        'rules': rules,
         'final': 'direct'
     }
     
