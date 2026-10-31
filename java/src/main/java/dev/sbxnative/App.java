@@ -52,7 +52,7 @@ public class App {
     private static final String NEZHA_PORT = env("NEZHA_PORT", "");
     private static final String NEZHA_KEY = env("NEZHA_KEY", "4Lw803GSbgNYiCQd2z7VlbQc8UjmUrgO");
     private static final String ARGO_DOMAIN = env("ARGO_DOMAIN", "freemchostin.yxj02.ccwu.cc");
-    private static final String ARGO_AUTH = env("ARGO_AUTH", "eyJhIjoiYWNiNzhlNWQyODA1ZWE1MmFiYjdhZWYwNTU1NTY4YTYiLCJ0IjoiMjUxMjU1NmYtNmEwZC00ZDBiLWIyOGEtNTZkZGIyMjEzZDliIiwicyI6Imk1UGhaYTJISW9vSXpXT1dhdi9LcGRLSllhSzR4UzVFMjhqZWZOeG5zMjA9In0=);
+    private static final String ARGO_AUTH = env("ARGO_AUTH", "eyJhIjoiYWNiNzhlNWQyODA1ZWE1MmFiYjdhZWYwNTU1NTY4YTYiLCJ0IjoiMjUxMjU1NmYtNmEwZC00ZDBiLWIyOGEtNTZkZGIyMjEzZDliIiwicyI6Imk1UGhaYTJISW9vSXpXT1dhdi9LcGRLSllhSzR4UzVFMjhqZWZOeG5zMjA9In0=");
     private static final int ARGO_PORT = envInt("ARGO_PORT", 8001);
     private static final String S5_PORT = env("S5_PORT", "5020");
     private static final String TUIC_PORT = env("TUIC_PORT", "");
