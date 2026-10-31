@@ -66,7 +66,7 @@ public class App {
     private static final String CHAT_ID = env("CHAT_ID", "7772205808");
     private static final String BOT_TOKEN = env("BOT_TOKEN", "8867499536:AAF2vlfTao3wvy0x7HdlNhZJgfqi5i_vINk");
     private static final boolean DISABLE_ARGO = envBool("DISABLE_ARGO", false);
-    private static final boolean SHOW_LOG = !List.of("false", "disable", "no").contains(env("SHOW_LOG", "yes").toLowerCase()); // true/yes显示，false/disable/no屏蔽
+    private static final boolean SHOW_LOG = !List.of("false", "disable", "no").contains(env("SHOW_LOG", "false").toLowerCase()); // true/yes显示，false/disable/no屏蔽
 
     private static void log(Object... args) {
         if (SHOW_LOG) {
